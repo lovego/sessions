@@ -2,7 +2,7 @@
 http sessions. now there is only cookie store, we will add redis store later.
 
 [![Build Status](https://travis-ci.org/lovego/sessions.svg?branch=master)](https://travis-ci.org/lovego/sessions)
-[![Coverage Status](https://coveralls.io/repos/github/lovego/sessions/badge.svg?branch=master)](https://coveralls.io/github/lovego/sessions?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/github/lovego/sessions/master.svg)](https://coveralls.io/github/lovego/sessions?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/lovego/sessions?1)](https://goreportcard.com/report/github.com/lovego/sessions)
 [![GoDoc](https://godoc.org/github.com/lovego/sessions?status.svg)](https://godoc.org/github.com/lovego/sessions)
 
