@@ -64,7 +64,7 @@ func ExampleCookieStore_Delete() {
 	// map[Set-Cookie:[name=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0]]
 }
 
-func ExampleCookieStore_DecodeData() {
+func ExampleCookieStore_EncodeData() {
 	ck := &http.Cookie{Name: "name", MaxAge: 1}
 	sess := &Session{Cookie: ck, Data: func() {}}
 	cs := NewCookieStore("")
