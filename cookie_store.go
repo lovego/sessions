@@ -19,7 +19,7 @@ func (cs CookieStore) Get(req *http.Request, name string, maxAge int64) (*Sessio
 	ck, _ := req.Cookie(name)
 	if ck != nil && ck.Value != `` {
 		data, err := cs.Decode(ck.Name, []byte(ck.Value), maxAge)
-		if err != nil {
+		if err != nil || len(data) == 0 {
 			return nil, err
 		}
 		return &Session{Cookie: ck, data: data}, nil
