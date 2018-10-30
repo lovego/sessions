@@ -40,7 +40,7 @@ func GetSession(req *http.Request) *Session {
 func SaveSession(rw http.ResponseWriter, data interface{}) {
 	err := cookieStore.Save(rw, cookie, data)
 	if err != nil {
-		fmt.Println("set session error:", err)
+		fmt.Println("save session error:", err)
 	}
 }
 
