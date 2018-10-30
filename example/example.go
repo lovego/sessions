@@ -4,51 +4,46 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/lovego/sessions"
+	"github.com/lovego/sessions/cookiestore"
 )
 
-var cookieStore = sessions.NewCookieStore("XXXX")
 var cookie = &http.Cookie{
 	Name:   "session",
 	MaxAge: 86400 * 30,
 }
+var cookieStore = cookiestore.New("XXXX")
 
-type SessionData struct {
+type Session struct {
 	UserId   int
 	UserName string
 }
 
-func getSessionData(req *http.Request) *SessionData {
-	sess, err := cookieStore.Get(req, cookie.Name, int64(cookie.MaxAge))
+func GetSession(req *http.Request) *Session {
+	ck, err := req.Cookie(cookie.Name)
 	if err != nil {
-		fmt.Println("get session error:", err)
-	}
-	if sess == nil {
+		fmt.Println("get cookie error:", err)
 		return nil
 	}
-	var data SessionData
-	if err := sess.GetData(&data); err != nil {
-		fmt.Println("get session data error:", err)
+	if ck == nil || ck.Value == "" {
+		return nil
+	}
+	ck.MaxAge = cookie.MaxAge
+
+	var data Session
+	if err := cookieStore.Get(ck, &data); err != nil {
+		fmt.Println("get session error:", err)
+		return nil
 	}
 	return &data
 }
 
-func setSessionData(rw http.ResponseWriter, data *SessionData) {
-	sess := &sessions.Session{
-		Cookie: cookie,
-		Data:   data,
-	}
-
-	err := cookieStore.Save(rw, sess)
+func SaveSession(rw http.ResponseWriter, data interface{}) {
+	err := cookieStore.Save(rw, cookie, data)
 	if err != nil {
 		fmt.Println("set session error:", err)
 	}
 }
 
-func deleteSession(rw http.ResponseWriter) {
-	sess := &sessions.Session{
-		Cookie: cookie,
-	}
-
-	cookieStore.Delete(rw, sess)
+func DeleteSession(rw http.ResponseWriter) {
+	cookieStore.Delete(rw, cookie)
 }

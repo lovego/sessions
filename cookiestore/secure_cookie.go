@@ -1,4 +1,4 @@
-package sessions
+package cookiestore
 
 import (
 	"bytes"
