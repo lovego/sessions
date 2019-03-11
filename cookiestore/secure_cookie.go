@@ -88,7 +88,7 @@ func (s *SecureCookie) createSign(b []byte) []byte {
 func (s *SecureCookie) verifyAndRemoveSign(name string, b []byte) ([]byte, error) {
 	// now b is "timestamp|value|sign".
 	pos := len(b) - sha256.Size // position of the first byte of the signature.
-	// thre must be at lease 4 byte before pos, example:  "0|v|"
+	// there must be at lease 4 byte before pos, example:  "0|v|"
 	if pos < 4 || b[pos-1] != '|' {
 		return nil, ErrorValueToDecodeIllegal
 	}
