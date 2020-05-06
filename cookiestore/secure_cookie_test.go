@@ -122,6 +122,15 @@ func ExampleSecureCookie_verifyAndRemoveTimestamp() {
 	// the session has expired
 }
 
+func ExampleSecureCookie_GetTimestamp() {
+	fmt.Println(
+		NewSecureCookie([]byte("test-hash-key")).GetTimestamp(
+			[]byte("MTU4ODc1NjkxMXx7IlVzZXJJZCI6MjE3NjYsIkNvbXBhbnlJZCI6NzQwNCwiU3RhZmZJ"),
+		),
+	)
+	// Output: 1588756911 <nil>
+}
+
 func Example_base64encode() {
 	fmt.Printf("%s\n", base64encode([]byte("a")))
 	fmt.Printf("%s\n", base64encode([]byte("ab")))

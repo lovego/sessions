@@ -118,6 +118,23 @@ func (s *SecureCookie) verifyAndRemoveTimestamp(b []byte, maxAge int64) ([]byte,
 	return b[pos+1:], nil
 }
 
+func (s *SecureCookie) GetTimestamp(value []byte) (int64, error) {
+	b, err := base64decode(value)
+	if err != nil {
+		return 0, err
+	}
+	// now b is "timestamp|value|sign".
+	pos := bytes.IndexByte(b, '|')
+	if pos < 1 {
+		return 0, ErrorValueToDecodeIllegal
+	}
+	gotTimestamp, err := strconv.ParseInt(string(b[:pos]), 10, 64)
+	if err != nil {
+		return 0, ErrorValueToDecodeIllegal
+	}
+	return gotTimestamp, nil
+}
+
 func (s *SecureCookie) nowTimestamp() int64 {
 	if s.timestampForTest > 0 {
 		return s.timestampForTest
